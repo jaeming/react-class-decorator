@@ -9,7 +9,6 @@ export function Component(target) {
       Object.getOwnPropertyNames(this).forEach(prop => {
         const isProp = !['props', 'updater', 'refs', 'state', 'context'].includes(prop)
         if (isProp) {
-          console.log({prop})
           this.state = {...this.state || {}, [prop]: this[prop] }
           delete this[prop]
 
@@ -30,4 +29,17 @@ export function Component(target) {
 
   }
   return component as any // not sure how to pass original class generic to decorator?
+}
+
+export function Prop(opts?: {default: any}) {
+  return function (target: any, key: string) {
+    target.constructor.defaultProps = {...target.defaultProps || {}, [key]: opts?.default}
+
+    target.constructor.getDerivedStateFromProps = (nextProps, prevState) => {
+      if (nextProps[key] !== prevState[key]) {
+        return ({ [key]: nextProps[key] })
+      }
+      return null
+    }
+  }
 }

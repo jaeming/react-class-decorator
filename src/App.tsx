@@ -1,12 +1,17 @@
 import React from 'react';
-import { Counter, CounterWithNoDecorator } from './Counter'
+import { Counter } from './Counter'
+import { CounterWithNoDecorator } from './CounterOld'
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <Counter />
-      <CounterWithNoDecorator />
+      <br />
+      <Counter msg='good' />
+      <br />
+      <hr />
+      <br />
+      <CounterWithNoDecorator msg='World' />
     </div>
   );
 }
