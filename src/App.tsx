@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       <br />
-      <Counter msg='good' />
+      <Counter msg='World' />
       <br />
       <hr />
       <br />

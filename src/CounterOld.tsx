@@ -1,11 +1,20 @@
 import React from 'react';
 
-export class CounterWithNoDecorator extends React.Component<{msg?: string}, {count: number}> {
-  
+export class CounterWithNoDecorator extends React.Component<{msg?: string}, {count: number, changeLog: string}> {
   constructor(props) {
     super(props)
     this.increment = this.increment.bind(this)
-    this.state = {count: 0}
+    this.state = {count: 0, changeLog: ''}
+  }
+
+  static defaultProps = {
+    msg: 'nobody'
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.count !== this.state.count) {
+      this.setState({changeLog: `Count was changed from ${prevState.count} to ${this.state.count}`})
+    }
   }
 
   increment () {
@@ -19,14 +28,16 @@ export class CounterWithNoDecorator extends React.Component<{msg?: string}, {cou
   render() {
     return (
       <div>
-        Hello {this.props.msg || 'no one'}
+        Hello {this.props.msg}
         <br />
         count: {this.state.count}
         <br />
         double: {this.doubled}
         <br />
         <button onClick={this.increment}>increment</button>
+        <br />
+        {this.state.changeLog}        
       </div>
-    );
+    )
   }
 }
